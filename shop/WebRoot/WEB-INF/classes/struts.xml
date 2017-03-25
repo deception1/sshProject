@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default,json-default">
+    	
+        <global-results>
+            <result name="error">/error.jsp</result>
+            <result name="login">/login.jsp</result>
+        </global-results>
+        
+        <!--以下举例，不需要用到的请删除-->
+        
+		<!--普遍用到的Action配置格式 STA-->
+		
+		<action name="initAction" class="Action" method="init">
+			<result name="success" type="redirectAction">redirectAction</result>
+		</action><!--普通调用，重定向Action-->
+		
+		<action name="redirectAction" class="Action" method="init">
+			<result name="success">index.jsp</result>
+		</action><!--普通调用，待重定向调用的Action-->
+		
+		<action name="loginAction" class="Action" method="login">
+			<result name="success" type="redirect">index.jsp</result>
+			<result name="input">login.jsp</result>
+		</action><!--普通调用-->
+		
+		<action name="login2Action" class="Action" method="login">
+			<result name="success">index.jsp</result>
+			<result name="input">login.jsp</result>
+		</action><!--普通调用，不指定转发类型，因为默认就是-->
+		
+		<action name="loadProjectAction" class="Action" method="loadProject">
+			<result name="success" type="json">
+				<param name="root">jsonList</param>
+				<param name="excludeProperties"></param>
+				<param name="excluedeNullProperties">true</param>
+			</result>
+		</action><!--AJAX方式：返回List<Object>集合-->
+		
+		<action name="updatePasswordAction" class="Action" method="updatePassword">
+			<result name="success" type="json">
+				<param name="root">jsonResult</param>
+				<param name="excludeProperties"></param>
+				<param name="excluedeNullProperties">true</param>
+				<param name="contentType">text/html</param>
+			</result>
+		</action><!--AJAX方式：返回结果集-->
+		
+		<action name="loadRoleAction" class="Action" method="loadRole">
+			<result name="success" type="json">
+				<param name="root">jsonData</param>
+				<param name="excludeProperties"></param>
+				<param name="excluedeNullProperties">true</param>
+			</result>
+		</action><!--AJAX方式：返回JSON字符串-->
+		
+		<action name="loadLevelsAction" class="Action" method="loadLevels">
+			<result name="success" type="json">
+				<param name="root">jsonData</param>
+				<param name="excludeProperties"></param>
+				<param name="excluedeNullProperties">true</param>
+				<param name="callbackParameter">jsoncallback</param>
+			</result>
+		</action><!--AJAX方式：返回JSON字符串【跨域方式】-->
+		
+		<!--普遍用到的Action配置格式 END-->
+		
+    </package>
+
+</struts>
